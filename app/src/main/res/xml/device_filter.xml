@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Espressif ESP32-S2/S3/C3 Native USB CDC -->
+    <usb-device vendor-id="12346" /> <!-- 0x303A Espressif -->
+    <!-- FTDI FT232 / FT2232 -->
+    <usb-device vendor-id="1027" /> <!-- 0x0403 FTDI -->
+    <!-- Silicon Labs CP210x (ESP32 NodeMCU) -->
+    <usb-device vendor-id="4292" /> <!-- 0x10C4 Silicon Labs -->
+    <!-- WCH CH340 / CH341 (ESP32 DevKit) -->
+    <usb-device vendor-id="6790" /> <!-- 0x1A86 QinHeng Electronics -->
+    <!-- Prolific PL2303 -->
+    <usb-device vendor-id="1659" /> <!-- 0x067B Prolific -->
+    <!-- Generic CDC ACM -->
+    <usb-device class="2" />
+</resources>

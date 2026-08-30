@@ -1,0 +1,70 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Vending Machine Body Outer Frame -->
+    <path
+        android:fillColor="#151D2F"
+        android:pathData="M30,22 h48 a4,4 0 0,1 4,4 v56 a4,4 0 0,1 -4,4 h-48 a4,4 0 0,1 -4,-4 v-56 a4,4 0 0,1 4,-4 z" />
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#00E5FF"
+        android:strokeWidth="2.5"
+        android:pathData="M30,22 h48 a4,4 0 0,1 4,4 v56 a4,4 0 0,1 -4,4 h-48 a4,4 0 0,1 -4,-4 v-56 a4,4 0 0,1 4,-4 z" />
+
+    <!-- Glass Display Window -->
+    <path
+        android:fillColor="#0B111E"
+        android:pathData="M34,26 h26 a2,2 0 0,1 2,2 v36 a2,2 0 0,1 -2,2 h-26 a2,2 0 0,1 -2,-2 v-36 a2,2 0 0,1 2,-2 z" />
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#1E293B"
+        android:strokeWidth="1.2"
+        android:pathData="M34,26 h26 a2,2 0 0,1 2,2 v36 a2,2 0 0,1 -2,2 h-26 a2,2 0 0,1 -2,-2 v-36 a2,2 0 0,1 2,-2 z" />
+
+    <!-- Slot 1 & Slot 2 Items (Top Row) -->
+    <path
+        android:fillColor="#00E5FF"
+        android:pathData="M38,32 h6 v10 h-6 z" />
+    <path
+        android:fillColor="#00E676"
+        android:pathData="M49,32 h6 v10 h-6 z" />
+
+    <!-- Slot 3 & Slot 4 Items (Bottom Row) -->
+    <path
+        android:fillColor="#FF3D71"
+        android:pathData="M38,48 h6 v10 h-6 z" />
+    <path
+        android:fillColor="#FFAA00"
+        android:pathData="M49,48 h6 v10 h-6 z" />
+
+    <!-- Shelf dividers -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#334155"
+        android:strokeWidth="1"
+        android:pathData="M35,44 h24 M35,60 h24" />
+
+    <!-- Side Control Panel / Payment Screen -->
+    <path
+        android:fillColor="#00E5FF"
+        android:pathData="M66,30 h10 v8 h-10 z" />
+    <path
+        android:fillColor="#64748B"
+        android:pathData="M66,42 h10 v18 h-10 z" />
+    <!-- Keypad Dots -->
+    <path
+        android:fillColor="#00E5FF"
+        android:pathData="M68,45 h2 v2 h-2 z M73,45 h2 v2 h-2 z M68,50 h2 v2 h-2 z M73,50 h2 v2 h-2 z M68,55 h2 v2 h-2 z M73,55 h2 v2 h-2 z" />
+
+    <!-- Dispense Tray / Exit Port -->
+    <path
+        android:fillColor="#0B111E"
+        android:strokeColor="#00E676"
+        android:strokeWidth="1.8"
+        android:pathData="M34,70 h40 a2,2 0 0,1 2,2 v8 a2,2 0 0,1 -2,2 h-40 a2,2 0 0,1 -2,-2 v-8 a2,2 0 0,1 2,-2 z" />
+    <path
+        android:fillColor="#00E676"
+        android:pathData="M46,75 h16 v2 h-16 z" />
+</vector>

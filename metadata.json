@@ -1,0 +1,6 @@
+{
+  "name": "Smart Vending Kiosk",
+  "description": "Companion Android application for automated 4-slot vending machine with ESP32 USB-OTG serial control and dynamic UPI payment",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

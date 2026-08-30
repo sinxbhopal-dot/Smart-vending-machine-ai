@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Smart Vending Kiosk</string>
+    <string name="kiosk_title">SMART VENDING KIOSK</string>
+    <string name="terminal_id">TERMINAL #01</string>
+    <string name="select_item_title">SELECT YOUR ITEM</string>
+    <string name="select_item_subtitle">Touch an item to initiate instant UPI payment &amp; hardware dispense</string>
+</resources>
