@@ -304,34 +304,29 @@ private fun UpiQrView(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // High-Contrast Standalone Official Razorpay Poster Card
+        // Pure Standalone Sharp QR Code (Full Display, No Poster Board)
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(340.dp)
+                .height(280.dp)
                 .clip(RoundedCornerShape(16.dp))
                 .background(Color.White)
                 .border(2.5.dp, NeonCyan.copy(alpha = 0.9f), RoundedCornerShape(16.dp)),
             contentAlignment = Alignment.Center
         ) {
-            if (!session.qrImageUrl.isNullOrBlank()) {
-                coil.compose.AsyncImage(
-                    model = session.qrImageUrl,
-                    contentDescription = "Razorpay Official QR",
-                    contentScale = androidx.compose.ui.layout.ContentScale.Fit,
-                    filterQuality = androidx.compose.ui.graphics.FilterQuality.High,
-                    modifier = Modifier.fillMaxSize()
-                )
-            } else if (session.qrBitmap != null) {
+            if (session.qrBitmap != null) {
                 Image(
                     bitmap = session.qrBitmap,
-                    contentDescription = "Standalone UPI Payment QR Code",
-                    modifier = Modifier.fillMaxSize()
+                    contentDescription = "Standalone Dynamic UPI QR",
+                    contentScale = androidx.compose.ui.layout.ContentScale.Fit,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(12.dp) // Scanning ke liye standard white margin
                 )
             } else {
                 CircularProgressIndicator(
                     color = NeonCyan,
-                    modifier = Modifier.size(36.dp),
+                    modifier = Modifier.size(40.dp),
                     strokeWidth = 3.dp
                 )
             }
