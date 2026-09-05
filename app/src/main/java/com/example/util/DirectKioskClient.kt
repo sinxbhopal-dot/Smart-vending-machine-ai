@@ -89,7 +89,8 @@ object DirectKioskClient {
                 val json = JSONObject(bodyString)
                 val qrId = json.optString("id", "")
                 val imageUrl = json.optString("image_url", null)
-                val payloadString = json.optString("payload_string", "")
+                val payloadString = json.optString("payload", "")
+                    .ifBlank { json.optString("payload_string", "") }
                     .ifBlank { json.optString("intent_url", "") }
                     .ifBlank { json.optString("qr_code", "") }
                     .takeIf { it.isNotBlank() }
