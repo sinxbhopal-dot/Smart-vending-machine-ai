@@ -165,24 +165,14 @@ class VendingViewModel(application: Application) : AndroidViewModel(application)
         _currentScreenState.value = AppScreen.PAYMENT_MODAL
 
         val txnId = "TXN" + System.currentTimeMillis().toString().takeLast(8) + (100..999).random()
-        val defaultUpiUri = QrCodeGenerator.buildUpiUri(
-            upiId = upiId,
-            merchantName = merchantName,
-            amount = slot.priceInr,
-            slotId = slot.slotId,
-            transactionId = txnId
-        )
-        val initialQrBitmap = QrCodeGenerator.generateQrBitmap(
-            content = defaultUpiUri,
-            sizePx = 768
-        )
+        val initialQrBitmap: androidx.compose.ui.graphics.ImageBitmap? = null
 
         _paymentSession.value = PaymentSession(
             slotItem = slot,
             transactionId = txnId,
-            upiUri = defaultUpiUri,
-            qrBitmap = initialQrBitmap,
-            qrId = null,
+            upiUri = null,
+            qrBitmap = null,
+            qrid = null,
             qrImageUrl = null,
             remainingSeconds = 120,
             isPaymentConfirmed = false,
