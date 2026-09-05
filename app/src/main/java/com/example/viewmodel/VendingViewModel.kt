@@ -210,13 +210,13 @@ class VendingViewModel(application: Application) : AndroidViewModel(application)
                     activeQrId = qrResp.qrId
                     // Construct NPCI dynamic UPI string with Razorpay QR ID:
                     // upi://pay?pa=razorpay@icici&pn={MERCHANT_NAME}&am={AMOUNT}&cu=INR&tr={QR_ID}&tn=Slot_{SLOT_ID}
-                    val dynamicUpiUri = qrResp.payloadString
-                        ?: QrCodeGenerator.buildRazorpayDynamicUpiUri(
-                            qrId = qrResp.qrId,
-                            merchantName = merchantToUse,
-                            amount = slot.priceInr,
-                            slotId = slot.slotId
-                        )
+                    val dynamicUpiUri = QrCodeGenerator.getRazorpayContentUri(
+                        payload = qrResp.payloadString,
+                        qrId = qrResp.qrid,
+                        merchantName = merchantToUse,
+                        amount = slot.priceInr,
+                        slotId = slot.id
+                          )
                     val updatedQrBitmap = QrCodeGenerator.generateQrBitmap(dynamicUpiUri, 768)
 
                     _paymentSession.value = _paymentSession.value?.copy(
