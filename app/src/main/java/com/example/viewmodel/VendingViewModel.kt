@@ -200,20 +200,21 @@ class VendingViewModel(application: Application) : AndroidViewModel(application)
                     activeQrId = qrResp.qrId
                     // Construct NPCI dynamic UPI string with Razorpay QR ID:
                     // upi://pay?pa=razorpay@icici&pn={MERCHANT_NAME}&am={AMOUNT}&cu=INR&tr={QR_ID}&tn=Slot_{SLOT_ID}
-                    val dynamicUpiUri = QrCodeGenerator.getRazorpayContentUri(
-                        payload = qrResp.payloadString,
-                        qrId = qrResp.qrId,
-                        merchantName = merchantToUse,
-                        amount = slot.priceInr,
-                        slotId = slot.slotId
+                 val dynamicUpiUri = QrCodeGenerator.getRazorpayContentUri(
+                      payload = qrResp.payloadString,
+                      qrId = qrResp.qrId,
+                      merchantName = merchantToUse,
+                      amount = slot.priceInr,
+                      slotId = slot.slotId
                     )
-                    val updatedQrBitmap = QrCodeGenerator.generateQrBitmap(dynamicUpiUri, 768)
 
-                    _paymentSession.value = _paymentSession.value?.copy(
-                        qrId = qrResp.qrId,
-                        qrImageUrl = null, // Discard external poster/flyer image
-                        upiUri = dynamicUpiUri,
-                        qrBitmap = updatedQrBitmap
+                 val updatedQrBitmap = QrCodeGenerator.generateQrBitmap(dynamicUpiUri, 768)
+
+                     _paymentSession.value = _paymentSession.value?.copy(
+                      qrId = qrResp.qrId,
+                      qrImageUrl = qrResp.imageUrl,   // <--- YAHAN qrResp.imageUrl KARNA HAI (null nahi)
+                      upiUri = dynamicUpiUri,
+                      qrBitmap = updatedQrBitmap
                     )
                 }
             }
