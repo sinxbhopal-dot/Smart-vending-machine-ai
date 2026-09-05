@@ -170,9 +170,9 @@ class VendingViewModel(application: Application) : AndroidViewModel(application)
         _paymentSession.value = PaymentSession(
             slotItem = slot,
             transactionId = txnId,
-            upiUri = null,
+            upiUri = "",
             qrBitmap = null,
-            qrid = null,
+            qrId = null,
             qrImageUrl = null,
             remainingSeconds = 120,
             isPaymentConfirmed = false,
