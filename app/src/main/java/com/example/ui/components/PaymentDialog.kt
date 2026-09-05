@@ -307,7 +307,8 @@ private fun UpiQrView(
         // High-Contrast Standalone Official Razorpay Poster Card
         Box(
             modifier = Modifier
-                .size(280.dp)
+                .fillMaxWidth()
+                .height(340.dp)
                 .clip(RoundedCornerShape(16.dp))
                 .background(Color.White)
                 .border(2.5.dp, NeonCyan.copy(alpha = 0.9f), RoundedCornerShape(16.dp)),
@@ -317,7 +318,8 @@ private fun UpiQrView(
                 coil.compose.AsyncImage(
                     model = session.qrImageUrl,
                     contentDescription = "Razorpay Official QR",
-                    contentScale = androidx.compose.ui.layout.ContentScale.FillBounds,
+                    contentScale = androidx.compose.ui.layout.ContentScale.Fit,
+                    filterQuality = androidx.compose.ui.graphics.FilterQuality.High,
                     modifier = Modifier.fillMaxSize()
                 )
             } else if (session.qrBitmap != null) {
