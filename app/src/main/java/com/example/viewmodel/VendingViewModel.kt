@@ -213,7 +213,7 @@ class VendingViewModel(application: Application) : AndroidViewModel(application)
                         qrId = qrResp.qrId,
                         qrImageUrl = null, // Discard external poster/flyer image
                         upiUri = dynamicUpiUri,
-                        qrBitmap = updatedQrBitmap ?: initialQrBitmap
+                        qrBitmap = updatedQrBitmap
                     )
                 }
             }
