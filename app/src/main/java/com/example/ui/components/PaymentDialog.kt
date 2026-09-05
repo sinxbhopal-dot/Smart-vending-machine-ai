@@ -304,24 +304,30 @@ private fun UpiQrView(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Pure Standalone Sharp QR Code (Full Display, No Poster Board)
+        // Centered & Cropped Direct Razorpay QR (No poster headers/footers)
         Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(280.dp)
+                .size(280.dp)
                 .clip(RoundedCornerShape(16.dp))
                 .background(Color.White)
                 .border(2.5.dp, NeonCyan.copy(alpha = 0.9f), RoundedCornerShape(16.dp)),
             contentAlignment = Alignment.Center
         ) {
-            if (session.qrBitmap != null) {
-                Image(
-                    bitmap = session.qrBitmap,
-                    contentDescription = "Standalone Dynamic UPI QR",
-                    contentScale = androidx.compose.ui.layout.ContentScale.Fit,
+            if (!session.qrImageUrl.isNullOrBlank()) {
+                coil.compose.AsyncImage(
+                    model = session.qrImageUrl,
+                    contentDescription = "Razorpay QR",
+                    contentScale = androidx.compose.ui.layout.ContentScale.Crop,
+                    alignment = androidx.compose.ui.Alignment.Center,
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(12.dp) // Scanning ke liye standard white margin
+                        .padding(8.dp)
+                )
+            } else if (session.qrBitmap != null) {
+                Image(
+                    bitmap = session.qrBitmap,
+                    contentDescription = "Fallback QR Code",
+                    modifier = Modifier.fillMaxSize()
                 )
             } else {
                 CircularProgressIndicator(
