@@ -35,16 +35,16 @@ object QrCodeGenerator {
      * Constructs a dynamic Razorpay NPCI UPI intent URI for direct on-device QR generation:
      * upi://pay?pa=razorpay@icici&pn={MERCHANT_NAME}&am={AMOUNT}&cu=INR&tr={QR_ID}&tn=Slot_{SLOT_ID}
      */
-    fun buildRazorpayDynamicUpiUri(
-        qrId: String,
-        merchantName: String,
-        amount: Double,
-        slotId: Int
-    ): String {
-        val encodedName = URLEncoder.encode(merchantName.ifBlank { "Smart Vending Kiosk" }, StandardCharsets.UTF_8.name())
-        val formattedAmount = "%.2f".format(amount)
-        val note = URLEncoder.encode("Slot_${slotId}", StandardCharsets.UTF_8.name())
-        return "upi://pay?pa=razorpay@icici&pn=$encodedName&am=$formattedAmount&cu=INR&tr=$qrId&tn=$note"
+    fun getRazorpayContentUri(payload: String?, qrId: String?, merchantName: String, amount: Double, slotId: Int): String {
+    // Agar Razorpay API se official payload link mila hai, to direct wahi use karein
+    if (!payload.isNullOrBlank()) {
+        return payload
+    }
+    // Fallback: Agar payload nahi hai tabhi manual link banayein
+    val encodedName = URLEncoder.encode(merchantName.ifBlank { "Smart Vending Kiosk" }, StandardCharsets.UTF_8.name())
+    val formattedAmount = "%.2f".format(amount)
+    val note = URLEncoder.encode("Slot ${slotId}", StandardCharsets.UTF_8.name())
+    return "upi://pay?pa=razorpay@icici&pn=${encodedName}&am=${formattedAmount}&cu=INR&tr=${qrId ?: ""}&tn=${note}"
     }
 
     /**
