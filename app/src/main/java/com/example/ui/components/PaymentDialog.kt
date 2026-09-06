@@ -67,6 +67,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.compose.ui.graphics.graphicsLayer
 import com.example.model.DispenseState
 import com.example.model.Esp32Response
 import com.example.ui.theme.CyberCardBorder
@@ -321,7 +322,10 @@ private fun UpiQrView(
                     alignment = androidx.compose.ui.Alignment.Center,
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(8.dp)
+                        .graphicsLayer(
+                            scaleX = 1.45f,
+                            scaleY = 1.45f
+                        )
                 )
             } else if (session.qrBitmap != null) {
                 Image(
