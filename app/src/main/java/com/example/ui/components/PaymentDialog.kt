@@ -793,6 +793,14 @@ private fun DispenseFailureView(
     onRetry: () -> Unit,
     onDismiss: () -> Unit
 ) {
+    var remainingSeconds by remember { mutableStateOf(10) }
+    LaunchedEffect(Unit) {
+        while (remainingSeconds > 0) {
+            kotlinx.coroutines.delay(1000L)
+            remainingSeconds--
+        }
+        onDismiss()
+    }
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -825,49 +833,24 @@ private fun DispenseFailureView(
             letterSpacing = 1.sp
         )
 
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Text(
+            text = "PLEASE CONTACT SUPPORT TEAM",
+            color = TextPrimary,
+            fontSize = 15.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center
+        )
         Spacer(modifier = Modifier.height(6.dp))
 
         Text(
-            text = error.userMessage,
-            color = TextPrimary,
-            fontSize = 13.sp,
+            text = "Auto closing in ${remainingSeconds}s",
+            color = TextSecondary,
+            fontSize = 12.sp,
             textAlign = TextAlign.Center
         )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Diagnostic details card
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(10.dp))
-                .background(CyberCardSurface)
-                .border(1.dp, NeonCoral.copy(alpha = 0.4f), RoundedCornerShape(10.dp))
-                .padding(12.dp)
-        ) {
-            Column {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(text = "ESP32 RESPONSE:", color = TextTertiary, fontSize = 10.sp, fontWeight = FontWeight.Bold)
-                    Text(
-                        text = error.rawCommand,
-                        color = NeonCoral,
-                        fontSize = 11.sp,
-                        fontWeight = FontWeight.Bold,
-                        fontFamily = FontFamily.Monospace
-                    )
-                }
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = "Raw: $rawMessage",
-                    color = TextSecondary,
-                    fontSize = 10.sp,
-                    fontFamily = FontFamily.Monospace
-                )
-            }
-        }
 
         Spacer(modifier = Modifier.height(20.dp))
 
