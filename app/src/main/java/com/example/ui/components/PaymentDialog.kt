@@ -308,6 +308,7 @@ private fun UpiQrView(
         // Centered & Cropped Direct Razorpay QR (No poster headers/footers)
         Box(
             modifier = Modifier
+                .width(270.dp)
                 .height(360.dp)
                 .clip(RoundedCornerShape(16.dp))
                 .background(Color.White)
