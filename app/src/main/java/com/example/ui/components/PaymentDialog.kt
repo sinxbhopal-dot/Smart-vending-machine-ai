@@ -308,7 +308,7 @@ private fun UpiQrView(
         // Centered & Cropped Direct Razorpay QR (No poster headers/footers)
         Box(
             modifier = Modifier
-                .size(280.dp)
+                .height(360.dp)
                 .clip(RoundedCornerShape(16.dp))
                 .background(Color.White)
                 .border(2.5.dp, NeonCyan.copy(alpha = 0.9f), RoundedCornerShape(16.dp)),
@@ -323,8 +323,8 @@ private fun UpiQrView(
                     modifier = Modifier
                         .fillMaxSize()
                         .graphicsLayer(
-                            scaleX = 1.45f,
-                            scaleY = 1.45f
+                            scaleX = 1.38f,
+                            scaleY = 1.38f
                         )
                 )
             } else if (session.qrBitmap != null) {
