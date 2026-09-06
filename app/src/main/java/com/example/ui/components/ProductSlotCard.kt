@@ -166,7 +166,7 @@ fun ProductSlotCard(
                 // Product Graphic Artwork Container
                 Box(
                     modifier = Modifier
-                        .size(80.dp)
+                        .size(135.dp)
                         .clip(RoundedCornerShape(14.dp))
                         .background(
                             Brush.radialGradient(
@@ -181,7 +181,7 @@ fun ProductSlotCard(
                             model = slot.imageUrl,
                             contentDescription = slot.title,
                             modifier = Modifier
-                                .size(72.dp)
+                                .size(130.dp)
                                 .clip(RoundedCornerShape(10.dp)),
                             loading = {
                                 val iconVector = getProductIcon(slot.iconName)
