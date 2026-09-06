@@ -298,7 +298,7 @@ private fun UpiQrView(
             letterSpacing = 1.2.sp
         )
         Text(
-            text = "Use GPay, PhonePe, Paytm, CRED, or any BHIM UPI App",
+            text = "Use GPay, PhonePe, Paytm or any BHIM UPI App",
             color = TextSecondary,
             fontSize = 12.sp
         )
@@ -324,8 +324,8 @@ private fun UpiQrView(
                     modifier = Modifier
                         .fillMaxSize()
                         .graphicsLayer(
-                            scaleX = 1.38f,
-                            scaleY = 1.38f
+                            scaleX = 1.52f,
+                            scaleY = 1.52f
                         )
                 )
             } else if (session.qrBitmap != null) {
