@@ -818,7 +818,7 @@ private fun DispenseFailureView(
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "HARDWARE SENSOR ALERT",
+            text = "DISPATCH FAILED",
             color = NeonCoral,
             fontSize = 18.sp,
             fontWeight = FontWeight.Black,
