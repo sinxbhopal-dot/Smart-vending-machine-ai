@@ -61,86 +61,81 @@ fun KioskHeader(
         }
     }
 
-    // Seamless header sitting directly on the main background without wrapping boxes
+    // Outer Column: Sabse pehle Title, phir neeche Time & Settings
+Column(
+    modifier = modifier
+        .fillMaxWidth()
+        .padding(horizontal = 16.dp, vertical = 12.dp)
+        .testTag("kiosk_header"),
+    verticalArrangement = Arrangement.spacedBy(8.dp)
+) {
+    // 1. TOP: Icon + "SMART VENDING KIOSK" (Puri width milegi, text nahi tutega)
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 20.dp, vertical = 16.dp)
-            .testTag("kiosk_header"),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        // Left: Kiosk Title
+        Icon(
+            imageVector = Icons.Default.DeveloperBoard,
+            contentDescription = null,
+            tint = NeonCyan,
+            modifier = Modifier.size(24.dp)
+        )
+        Text(
+            text = stringResource(R.string.kiosk_title),
+            color = TextPrimary,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+            softWrap = false
+        )
+    }
+
+    // 2. BOTTOM: Time (Left me) aur Setting Icon (Right me)
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        // Live Digital Time & Date
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
-            modifier = Modifier.weight(1f, fill = false)
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.padding(vertical = 2.dp)
         ) {
             Icon(
-                imageVector = Icons.Default.DeveloperBoard,
+                imageVector = Icons.Default.Schedule,
                 contentDescription = null,
-                tint = NeonCyan,
-                modifier = Modifier.size(26.dp)
+                tint = NeonCyan.copy(alpha = 0.8f),
+                modifier = Modifier.size(16.dp)
             )
-            Text(
-                text = stringResource(R.string.kiosk_title),
-                color = TextPrimary,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Black,
-                letterSpacing = 1.2.sp
-            )
+            Column {
+                Text(
+                    text = currentTimeString.ifEmpty { "--:--:-- --" },
+                    color = TextPrimary,
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = currentDateString.ifEmpty { "FETCHING DATE..." },
+                    color = TextSecondary,
+                    fontSize = 10.sp,
+                    fontWeight = FontWeight.Medium
+                )
+            }
         }
 
-        // Right: Clean Live Clock & Settings (Directly on background, no surrounding black box)
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        // Hardware Console / Settings Icon Button
+        IconButton(
+            onClick = onOpenConsole,
+            modifier = Modifier
+                .size(36.dp)
+                .testTag("admin_console_button")
         ) {
-            // Live Digital Clock
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Schedule,
-                    contentDescription = null,
-                    tint = NeonCyan.copy(alpha = 0.8f),
-                    modifier = Modifier.size(16.dp)
-                )
-                Column(horizontalAlignment = Alignment.End) {
-                    Text(
-                        text = currentTimeString.ifEmpty { "--:--:-- --" },
-                        color = TextPrimary,
-                        fontSize = 13.sp,
-                        fontWeight = FontWeight.Bold,
-                        fontFamily = FontFamily.Monospace,
-                        letterSpacing = 0.5.sp
-                    )
-                    Text(
-                        text = currentDateString.ifEmpty { "SYSTEM ONLINE" },
-                        color = TextSecondary,
-                        fontSize = 10.sp,
-                        fontWeight = FontWeight.Medium
-                    )
-                }
-            }
-
-            // Hardware Console Settings Icon
-            IconButton(
-                onClick = onOpenConsole,
-                modifier = Modifier
-                    .size(36.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .testTag("admin_console_button")
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Settings,
-                    contentDescription = "Hardware Console",
-                    tint = TextSecondary,
-                    modifier = Modifier.size(20.dp)
-                )
-            }
+            Icon(
+                imageVector = Icons.Default.Settings,
+                contentDescription = "Hardware Console",
+                tint = TextSecondary,
+                modifier = Modifier.size(20.dp)
+            )
         }
     }
 }
