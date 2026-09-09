@@ -65,7 +65,7 @@ fun KioskHeader(
 Column(
     modifier = modifier
         .fillMaxWidth()
-        .padding(horizontal = 16.dp, vertical = 12.dp)
+        .padding(horizontal = 16.dp, vertical = 4.dp)
         .testTag("kiosk_header"),
     verticalArrangement = Arrangement.spacedBy(8.dp)
 ) {
