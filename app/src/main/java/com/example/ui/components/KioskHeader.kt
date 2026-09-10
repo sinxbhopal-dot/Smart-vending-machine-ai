@@ -65,9 +65,9 @@ fun KioskHeader(
 Column(
     modifier = modifier
         .fillMaxWidth()
-        .padding(horizontal = 16.dp, vertical = 4.dp)
+        .padding(horizontal = 16.dp, vertical = 8.dp)
         .testTag("kiosk_header"),
-    verticalArrangement = Arrangement.spacedBy(8.dp)
+    verticalArrangement = Arrangement.spacedBy(6.dp)
 ) {
     // 1. TOP: Icon + "SMART VENDING KIOSK" (Puri width milegi, text nahi tutega)
     Row(
@@ -83,7 +83,7 @@ Column(
         Text(
             text = stringResource(R.string.kiosk_title),
             color = TextPrimary,
-            fontSize = 24.sp,
+            fontSize = 21.sp,
             fontWeight = FontWeight.Bold,
             softWrap = false
         )
