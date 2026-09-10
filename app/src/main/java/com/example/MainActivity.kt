@@ -350,11 +350,11 @@ private fun KioskFooterInfo() {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceAround
         ) {
-            FooterStep(step = "1", title = "Choose Slot", sub = "Touch Item Card")
+            FooterStep(step = "1", title = "Choose Slot", sub = "TAP TO BUY")
             Box(modifier = Modifier.size(1.dp, 24.dp).background(CyberCardBorder))
             FooterStep(step = "2", title = "Scan QR", sub = "Any UPI App")
             Box(modifier = Modifier.size(1.dp, 24.dp).background(CyberCardBorder))
-            FooterStep(step = "3", title = "Auto Dispense", sub = "ESP32 Motor Lift")
+            FooterStep(step = "3", title = "Auto Dispense", sub = "Pick Your Item")
         }
     }
 }
