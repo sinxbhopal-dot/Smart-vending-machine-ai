@@ -72,7 +72,7 @@ Column(
     // 1. TOP: Icon + "SMART VENDING KIOSK" (Puri width milegi, text nahi tutega)
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Icon(
             imageVector = Icons.Default.DeveloperBoard,
@@ -98,7 +98,7 @@ Column(
         // Live Digital Time & Date
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
             modifier = Modifier.padding(vertical = 2.dp)
         ) {
             Icon(
