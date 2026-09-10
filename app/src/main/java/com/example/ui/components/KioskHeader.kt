@@ -83,7 +83,7 @@ Column(
         Text(
             text = stringResource(R.string.kiosk_title),
             color = TextPrimary,
-            fontSize = 28.sp,
+            fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             softWrap = false
         )
