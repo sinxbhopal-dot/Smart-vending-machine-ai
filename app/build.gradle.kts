@@ -76,6 +76,11 @@ googleServices { missingGoogleServicesStrategy = MissingGoogleServicesStrategy.W
 // Some unused dependencies are commented out below instead of being removed.
 // This makes it easy to add them back in the future if needed.
 dependencies {
+    // MQTT Client Library (Zero-Account WebSockets & TCP)
+ implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5")
+
+    // JSON Parsing
+  implementation("org.json:json:20231013")
   implementation(platform(libs.androidx.compose.bom))
   implementation(platform(libs.firebase.bom))
   // implementation(libs.accompanist.permissions)
