@@ -66,6 +66,7 @@ class MainActivity : ComponentActivity(), PaymentResultListener {
 
     private val viewModel: VendingViewModel by viewModels()
     private var activeSelectedSlot: SlotItem? = null
+    private lateinit var mqttManager: MqttVendingManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,7 +74,29 @@ class MainActivity : ComponentActivity(), PaymentResultListener {
             Checkout.preload(applicationContext)
         } catch (e: Exception) {
             // Preload graceful fallback
+        }     
+        // --- MQTT REMOTE CONTROLLER START ---
+        mqttManager = MqttVendingManager("MACHINE_01")
+
+        // 1. Website se Slot updates sunna
+        mqttManager.onSlotUpdated = { slot, name, price, stock, imageUrl ->
+            runOnUiThread {
+                android.widget.Toast.makeText(this, "Updated: $name (₹$price)", android.widget.Toast.LENGTH_SHORT).show()
+                // Yahan aapka viewModel slot update karega
+            }
         }
+
+        // 2. Website se Home / Stop commands sunna
+        mqttManager.onHardwareCommand = { cmd ->
+            runOnUiThread {
+                android.widget.Toast.makeText(this, "Command: $cmd", android.widget.Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // Service shuru karein
+        mqttManager.start()
+        // ------------------------------------
+        
         enableEdgeToEdge()
         setContent {
             SmartVendingTheme {
