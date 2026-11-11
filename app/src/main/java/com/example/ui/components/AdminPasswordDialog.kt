@@ -34,6 +34,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -68,7 +69,6 @@ import com.example.ui.theme.TextSecondary
 import com.example.ui.theme.TextTertiary
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.OutlinedTextFieldDefaults
 
 /**
  * Secure Admin & Settings Password Verification Dialog.
@@ -366,46 +366,52 @@ fun MachineConfigDialog(
     var idText by remember { mutableStateOf(currentId) }
     var nameText by remember { mutableStateOf(currentName) }
 
-    Dialog(onDismissRequest = onDismiss) {
-        Card(
+    Dialog(
+        onDismissRequest = onDismiss,
+        properties = DialogProperties(usePlatformDefaultWidth = false)
+    ) {
+        Surface(
             shape = RoundedCornerShape(12.dp),
-            colors = CardDefaults.cardColors(containerColor = Color(0xFF111A24)),
-            modifier = Modifier.padding(16.dp).fillMaxWidth()
+            color = Color(0xFF111A24),
+            modifier = Modifier.padding(20.dp).fillMaxWidth()
         ) {
-            Column(modifier = Modifier.padding(16.dp)) {
-                Text("⚙️ Machine Setup", color = Color(0xFF00E5FF), style = MaterialTheme.typography.titleMedium)
-                Spacer(modifier = Modifier.height(12.dp))
+            Column(modifier = Modifier.padding(18.dp)) {
+                Text(
+                    text = "⚙️ Machine Setup",
+                    color = Color(0xFF00E5FF),
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.height(14.dp))
 
                 OutlinedTextField(
                     value = idText,
                     onValueChange = { idText = it },
-                    label = { Text("Machine ID (e.g. VM_BHOPAL_01)") },
+                    label = { Text("Machine ID (e.g. VM_BHOPAL_01)", color = Color.Gray, fontSize = 12.sp) },
                     singleLine = true,
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedTextColor = Color.White,
-                        unfocusedTextColor = Color.White
-                    )
+                    modifier = Modifier.fillMaxWidth()
                 )
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(10.dp))
 
                 OutlinedTextField(
                     value = nameText,
                     onValueChange = { nameText = it },
-                    label = { Text("Machine Display Name") },
+                    label = { Text("Machine Display Name", color = Color.Gray, fontSize = 12.sp) },
                     singleLine = true,
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedTextColor = Color.White,
-                        unfocusedTextColor = Color.White
-                    )
+                    modifier = Modifier.fillMaxWidth()
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(18.dp))
 
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
                     TextButton(onClick = onDismiss) {
-                        Text("Cancel", color = Color.Gray)
+                        Text("Cancel", color = Color.Gray, fontSize = 13.sp)
                     }
+                    Spacer(modifier = Modifier.width(8.dp))
                     Button(
                         onClick = {
                             if (idText.isNotBlank()) {
@@ -413,13 +419,15 @@ fun MachineConfigDialog(
                                 onDismiss()
                             }
                         },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00E5FF))
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = Color(0xFF00E5FF),
+                            contentColor = Color.Black
+                        )
                     ) {
-                        Text("Save & Connect", color = Color.Black)
+                        Text("Save & Connect", fontWeight = FontWeight.Bold, fontSize = 13.sp)
                     }
                 }
             }
         }
     }
 }
-
