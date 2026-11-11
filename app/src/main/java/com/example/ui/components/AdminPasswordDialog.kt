@@ -413,18 +413,14 @@ fun MachineConfigDialog(
                     }
                     Spacer(modifier = Modifier.width(8.dp))
                     Button(
-                        onClick = {
-                            if (idText.isNotBlank()) {
-                                onSave(idText, nameText)
-                                onDismiss()
-                            }
-                        },
-                        colors = ButtonDefaults.buttonColors(
-                         backgroundColor = Color(0xFF00E5FF),
-                         contentColor = Color.Black
-                        )
-                    ) {
-                        Text("Save & Connect", fontWeight = FontWeight.Bold, fontSize = 13.sp)
+    onClick = {
+        if (idText.isNotBlank()) {
+            onSave(idText, nameText)
+            onDismiss()
+        }
+    }
+) {
+    Text("Save & Connect", fontWeight = FontWeight.Bold, fontSize = 13.sp)
                     }
                 }
             }
