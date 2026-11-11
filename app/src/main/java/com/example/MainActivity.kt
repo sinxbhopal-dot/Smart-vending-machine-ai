@@ -76,8 +76,7 @@ class MainActivity : ComponentActivity(), PaymentResultListener {
             // Preload graceful fallback
         }     
         // --- MQTT REMOTE CONTROLLER START ---
-        mqttManager = MqttVendingManager("MACHINE_01")
-
+        mqttManager = MqttVendingManager(this)
         // 1. Website se Slot updates sunna
         mqttManager.onSlotUpdated = { slot, name, price, stock, imageUrl ->
             runOnUiThread {
@@ -124,6 +123,10 @@ class MainActivity : ComponentActivity(), PaymentResultListener {
         activeSelectedSlot = slot
         viewModel.startPurchase(slot)
     }
+        fun onSaveNewMachineConfig(newId: String, newName: String) {
+        mqttManager.updateMachineConfig(newId, newName)
+        android.widget.Toast.makeText(this, "Connected to: $newId ($newName)", android.widget.Toast.LENGTH_SHORT).show()
+        }
 
     /**
      * Optional direct Razorpay SDK Checkout Launcher
