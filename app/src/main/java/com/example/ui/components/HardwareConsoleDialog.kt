@@ -94,6 +94,12 @@ fun HardwareConsoleDialog(
     var selectedSimulatedFault by remember { mutableStateOf<Esp32Response?>(null) }
 
     val logListState = rememberLazyListState()
+    var showMachineConfig by remember { mutableStateOf(false) }
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val prefs = remember { context.getSharedPreferences("vending_prefs", android.content.Context.MODE_PRIVATE) }
+    var machineId by remember { mutableStateOf(prefs.getString("KEY_MACHINE_ID", "VM_BHOPAL_01") ?: "VM_BHOPAL_01") }
+    var machineName by remember { mutableStateOf(prefs.getString("KEY_MACHINE_NAME", "Main Kiosk") ?: "Main Kiosk") }
+    
     LaunchedEffect(serialLogs.size) {
         if (serialLogs.isNotEmpty() && selectedTab == 0) {
             logListState.animateScrollToItem(serialLogs.size - 1)
@@ -142,6 +148,21 @@ fun HardwareConsoleDialog(
                             letterSpacing = 1.sp
                         )
                     }
+                androidx.compose.material3.Button(
+                onClick = { showMachineConfig = true },
+                colors = androidx.compose.material3.ButtonDefaults.buttonColors(
+                    containerColor = androidx.compose.ui.graphics.Color(0xFF16222F)
+                ),
+                shape = androidx.compose.foundation.shape.RoundedCornerShape(8.dp)
+            ) {
+                androidx.compose.material3.Text(
+                    text = "⚙️ $machineId",
+                    color = NeonCyan,
+                    fontSize = 11.sp,
+                    fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
+                )
+                                }
+                                
 
                     IconButton(
                         onClick = onDismiss,
@@ -517,6 +538,22 @@ fun HardwareConsoleDialog(
         }
     }
 }
+        if (showMachineConfig) {
+        MachineConfigDialog(
+            currentId = machineId,
+            currentName = machineName,
+            onDismiss = { showMachineConfig = false },
+            onSave = { newId, newName ->
+                machineId = newId
+                machineName = newName
+                prefs.edit()
+                    .putString("KEY_MACHINE_ID", newId)
+                    .putString("KEY_MACHINE_NAME", newName)
+                    .apply()
+            }
+        )
+        }
+    
 }
 
 @Composable
