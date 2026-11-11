@@ -353,3 +353,70 @@ fun AdminPasswordDialog(
         }
     }
 }
+@Composable
+fun MachineConfigDialog(
+    currentId: String,
+    currentName: String,
+    onDismiss: () -> Unit,
+    onSave: (id: String, name: String) -> Unit
+) {
+    var idText by remember { mutableStateOf(currentId) }
+    var nameText by remember { mutableStateOf(currentName) }
+
+    Dialog(onDismissRequest = onDismiss) {
+        Card(
+            shape = RoundedCornerShape(12.dp),
+            colors = CardDefaults.cardColors(containerColor = Color(0xFF111A24)),
+            modifier = Modifier.padding(16.dp).fillMaxWidth()
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text("⚙️ Machine Setup", color = Color(0xFF00E5FF), style = MaterialTheme.typography.titleMedium)
+                Spacer(modifier = Modifier.height(12.dp))
+
+                OutlinedTextField(
+                    value = idText,
+                    onValueChange = { idText = it },
+                    label = { Text("Machine ID (e.g. VM_BHOPAL_01)") },
+                    singleLine = true,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = Color.White,
+                        unfocusedTextColor = Color.White
+                    )
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                OutlinedTextField(
+                    value = nameText,
+                    onValueChange = { nameText = it },
+                    label = { Text("Machine Display Name") },
+                    singleLine = true,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = Color.White,
+                        unfocusedTextColor = Color.White
+                    )
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                    TextButton(onClick = onDismiss) {
+                        Text("Cancel", color = Color.Gray)
+                    }
+                    Button(
+                        onClick = {
+                            if (idText.isNotBlank()) {
+                                onSave(idText, nameText)
+                                onDismiss()
+                            }
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00E5FF))
+                    ) {
+                        Text("Save & Connect", color = Color.Black)
+                    }
+                }
+            }
+        }
+    }
+}
+
