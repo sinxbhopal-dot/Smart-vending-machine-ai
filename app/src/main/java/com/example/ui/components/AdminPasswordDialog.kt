@@ -420,8 +420,8 @@ fun MachineConfigDialog(
                             }
                         },
                         colors = ButtonDefaults.buttonColors(
-                            backgroundColor = Color(0xFF00E5FF),
-                            contentColor = Color.Black
+                         backgroundColor = Color(0xFF00E5FF),
+                         contentColor = Color.Black
                         )
                     ) {
                         Text("Save & Connect", fontWeight = FontWeight.Bold, fontSize = 13.sp)
