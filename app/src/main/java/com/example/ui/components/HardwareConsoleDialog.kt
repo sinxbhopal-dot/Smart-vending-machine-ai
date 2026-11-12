@@ -544,15 +544,16 @@ fun HardwareConsoleDialog(
             currentName = machineName,
             onDismiss = { showMachineConfig = false },
             onSave = { newId, newName ->
-            machineId = newId
-             machineName = newName
-    // Ye line call kar dein:
-    viewModel.mqttManager.updateMachineId(newId, newName)
-                    }
+                machineId = newId
+                machineName = newName
+                prefs.edit()
+                    .putString("KEY_MACHINE_ID", newId)
+                    .putString("KEY_MACHINE_NAME", newName)
+                    .apply()
             }
         )
         }
-    
+        
 }
 
 @Composable
