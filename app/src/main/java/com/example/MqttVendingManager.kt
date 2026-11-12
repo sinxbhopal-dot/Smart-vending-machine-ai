@@ -1,4 +1,4 @@
-package com.example.viewmodel
+package com.example
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -28,6 +28,10 @@ class MqttVendingManager(private val context: Context) {
 
     fun getMachineId(): String = prefs.getString("KEY_MACHINE_ID", "VM_BHOPAL_01") ?: "VM_BHOPAL_01"
     fun getMachineName(): String = prefs.getString("KEY_MACHINE_NAME", "Main Kiosk") ?: "Main Kiosk"
+
+    fun updateMachineConfig(newId: String, newName: String) {
+        updateMachineId(newId, newName)
+    }
 
     fun updateMachineId(newId: String, newName: String) {
         val cleanId = newId.trim().uppercase().replace("[^A-Z0-9_-]".toRegex(), "_")
