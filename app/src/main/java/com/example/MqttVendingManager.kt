@@ -2,12 +2,13 @@ package com.example.viewmodel
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Base64
 import android.util.Log
 import org.eclipse.paho.client.mqttv3.*
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
-import java.util.Base64
+import java.security.SecureRandom
 import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
@@ -35,7 +36,6 @@ class MqttVendingManager(private val context: Context) {
             .putString("KEY_MACHINE_NAME", newName.trim())
             .apply()
 
-        // Restart MQTT connection with new Machine ID
         Thread {
             disconnect()
             Thread.sleep(500)
@@ -76,13 +76,11 @@ class MqttVendingManager(private val context: Context) {
                     override fun connectComplete(reconnect: Boolean, serverURI: String?) {
                         Log.d(TAG, "Connected to HiveMQ! Subscribing to $topicSub")
                         mqttClient?.subscribe(topicSub, 1)
-                        // Send initial telemetry immediately on connect
                         sendLiveTelemetry(online = true, elevatorPos = "Floor 0", dropDetected = false, weightGrams = 0)
                     }
 
                     override fun messageArrived(topic: String?, message: MqttMessage?) {
                         val payloadStr = message?.toString() ?: return
-                        Log.d(TAG, "Received raw MQTT: $payloadStr")
                         handleIncomingEncrypted(payloadStr)
                     }
 
@@ -103,7 +101,6 @@ class MqttVendingManager(private val context: Context) {
     private fun handleIncomingEncrypted(cipherText: String) {
         try {
             val decryptedJson = decryptCryptoJS(cipherText, aesPassphrase)
-            Log.d(TAG, "Decrypted: $decryptedJson")
             val json = JSONObject(decryptedJson)
 
             when (json.optString("action")) {
@@ -125,10 +122,11 @@ class MqttVendingManager(private val context: Context) {
         }
     }
 
-    // Sends telemetry back to Web Dashboard
     fun sendLiveTelemetry(online: Boolean, elevatorPos: String, dropDetected: Boolean, weightGrams: Int) {
         val payload = JSONObject().apply {
             put("type", "TELEMETRY")
+            put("machineId", getMachineId())
+            put("machineName", getMachineName())
             put("online", online)
             put("elevatorPos", elevatorPos)
             put("dropDetected", dropDetected)
@@ -138,6 +136,10 @@ class MqttVendingManager(private val context: Context) {
         publishEncryptedPayload("vending_telemetry/${getMachineId()}", payload.toString())
     }
 
+    fun publishInventory(jsonString: String) {
+        publishEncryptedPayload("vending_inventory/${getMachineId()}", jsonString)
+    }
+
     private fun publishEncryptedPayload(topic: String, plainText: String) {
         Thread {
             try {
@@ -145,7 +147,6 @@ class MqttVendingManager(private val context: Context) {
                     val encrypted = encryptCryptoJS(plainText, aesPassphrase)
                     val msg = MqttMessage(encrypted.toByteArray(StandardCharsets.UTF_8)).apply { qos = 1 }
                     mqttClient?.publish(topic, msg)
-                    Log.d(TAG, "Telemetry published to $topic")
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Publish error: ${e.message}")
@@ -153,9 +154,8 @@ class MqttVendingManager(private val context: Context) {
         }.start()
     }
 
-    // --- CRYPTOJS-COMPATIBLE AES DECRYPTION ---
     private fun decryptCryptoJS(cipherText: String, passphrase: String): String {
-        val cipherBytes = Base64.getDecoder().decode(cipherText)
+        val cipherBytes = Base64.decode(cipherText, Base64.DEFAULT)
         val salt = ByteArray(8)
         System.arraycopy(cipherBytes, 8, salt, 0, 8)
         val actualCipherText = ByteArray(cipherBytes.size - 16)
@@ -173,10 +173,9 @@ class MqttVendingManager(private val context: Context) {
         return String(decrypted, StandardCharsets.UTF_8)
     }
 
-    // --- CRYPTOJS-COMPATIBLE AES ENCRYPTION ---
     private fun encryptCryptoJS(plainText: String, passphrase: String): String {
         val salt = ByteArray(8)
-        java.security.SecureRandom().nextBytes(salt)
+        SecureRandom().nextBytes(salt)
 
         val keyAndIv = evpKDF(passphrase.toByteArray(StandardCharsets.UTF_8), 32, 16, salt)
         val key = ByteArray(32)
@@ -188,14 +187,13 @@ class MqttVendingManager(private val context: Context) {
         cipher.init(Cipher.ENCRYPT_MODE, SecretKeySpec(key, "AES"), IvParameterSpec(iv))
         val encryptedBytes = cipher.doFinal(plainText.toByteArray(StandardCharsets.UTF_8))
 
-        // Prefix with OpenSSL header: 'Salted__' (8 bytes) + Salt (8 bytes)
         val prefix = "Salted__".toByteArray(StandardCharsets.US_ASCII)
         val finalPayload = ByteArray(prefix.size + salt.size + encryptedBytes.size)
         System.arraycopy(prefix, 0, finalPayload, 0, prefix.size)
         System.arraycopy(salt, 0, finalPayload, prefix.size, salt.size)
         System.arraycopy(encryptedBytes, 0, finalPayload, prefix.size + salt.size, encryptedBytes.size)
 
-        return Base64.getEncoder().encodeToString(finalPayload)
+        return Base64.encodeToString(finalPayload, Base64.NO_WRAP)
     }
 
     private fun evpKDF(password: ByteArray, keySize: Int, ivSize: Int, salt: ByteArray): ByteArray {
